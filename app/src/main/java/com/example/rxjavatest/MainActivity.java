@@ -1,7 +1,6 @@
 package com.example.rxjavatest;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,7 +9,6 @@ import com.example.rxjavatest.databinding.ActivityMainBinding;
 import com.example.rxjavatest.net.GitHttpAction;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import io.reactivex.rxjava3.disposables.Disposable;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,36 +21,37 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        Disposable dd = GitHttpAction.listRepos("fdsafdas")
+//
+        disposable.add(GitHttpAction.listRepos("bearkinf===12")
                 .subscribe(s -> {
                     Log.d("bear", "fdsafdsa a : " + s);
                 }, throwable -> {
                     throwable.printStackTrace();
-//                    disposable.dispose();
-                });
+                    Log.e("bear", "error :  " + throwable.getMessage());
 
-        Log.v("bear", "dddhhanddf : " + dd.isDisposed());
-
-        disposable.add(dd);
-        Log.w("bear", "dddhhanddf : " + disposable.isDisposed());
-
-
-        new Handler().postDelayed(() -> {
-
-            Log.w("bear", "dddhhanddf : " + dd.isDisposed());
-            Log.e("bear", "dddhhanddf : " + disposable.isDisposed());
-        }, 5000);
-
-
-        binding.HelloWorld.setOnClickListener(v -> {
-//            disposable.dispose();
-            new Handler().postDelayed(() -> {
-                Log.w("bear", "dddhhanddf : " + dd.isDisposed());
-//                Log.e("bear", "dddhhanddf : " + disposable.isDisposed());
-            }, 5000);
-
-        });
+                })
+        );
+//
+//        disposable.add(GitHttpAction.listRepos2("bearkinf22")
+//                .map(stringResponse -> {
+//
+//                            if (stringResponse.isSuccessful()) {
+//                                return stringResponse.body();
+//                            } else {
+//                                throw new HttpException(stringResponse);
+//                            }
+//                        }
+//
+//                )
+//                .subscribe(s -> {
+//                    Log.d("bear", "fdsafdsa a : " + s);
+//                }, throwable -> {
+////                    throwable.printStackTrace();
+//                    Log.e("bear", "error :  " + throwable.getMessage());
+//
+//                })
+//
+//        );
 
 
     }
