@@ -8,7 +8,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.rxjavatest.databinding.ActivityMainBinding;
 import com.example.rxjavatest.net.GitHttpAction;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import kotlin.collections.ArraysKt;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,7 +26,8 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 //
-        disposable.add(GitHttpAction.listRepos("bearkinf===12")
+        disposable.add(GitHttpAction.listRepos("bearkinf")
+            
                 .subscribe(s -> {
                     Log.d("bear", "fdsafdsa a : " + s);
                 }, throwable -> {
@@ -31,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
                 })
         );
+
+
 //
 //        disposable.add(GitHttpAction.listRepos2("bearkinf22")
 //                .map(stringResponse -> {

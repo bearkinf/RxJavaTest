@@ -48,7 +48,12 @@ public class HttpServer {
             .client(httpClient)
             .build();
 
-    public GithubService api = retrofit.create(GithubService.class);
+    public final GithubService api = retrofit.create(GithubService.class);
+
+
+    public <T> T apiService(final Class<T> service) {
+        return retrofit.create(service);
+    }
 
 
 }
