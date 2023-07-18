@@ -19,8 +19,12 @@ public class GitHttpAction {
                 .subscribeOn(Schedulers.io());
     }
 
-    private static GithubService_2 githubService_2 = HttpServer.getInstance().apiService(GithubService_2.class);
+    public static Single<String> listRepos22(String path) {
+        return HttpServer.getInstance().api.listRepos22(path)
+                .subscribeOn(Schedulers.io());
+    }
 
+    private static GithubService_2 githubService_2 = HttpServer.getInstance().apiService(GithubService_2.class);
 
     public static Single<Response<String>> listRepos2(String user) {
 

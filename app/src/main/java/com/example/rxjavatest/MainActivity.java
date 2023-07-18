@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.rxjavatest.databinding.ActivityMainBinding;
 import com.example.rxjavatest.net.GitHttpAction;
+import com.example.rxjavatest.net.Global;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -63,47 +64,24 @@ public class MainActivity extends AppCompatActivity {
 //        );
 
 
-        disposable.add(Single.just(new ArrayList<String>())
+        Global.repos = "users/%s/repos";
+        disposable.add(Single.just(String.format(Global.repos, "bearkinf"))
 
 //                        .concatMap(strings -> {
-//                            return GitHttpAction.listRepos("bearkinffdafdasf")
+//                            return GitHttpAction.listRepos("bearkinf")
 //                                    .map(s -> {
 //                                                strings.add(s);
 //                                                return strings;
 //                                            }
 //                                    );
 //                        })
-                        .concatMap(strings -> {
-                            return GitHttpAction.listRepos("bearkinf")
-                                    .map(s -> {
-                                                strings.add(s);
-                                                return strings;
-                                            }
-                                    );
-                        })
-                        .concatMap(strings -> {
-                            return GitHttpAction.listRepos("otcocat")
-                                    .map(s -> {
-                                                strings.add(s);
-                                                return strings;
-                                            }
-                                    );
-                        })
-
 
                         .concatMap(strings -> {
-                            return GitHttpAction.listRepos("bearkinffdafdasf")
-                                    .map(s -> {
-                                                strings.add(s);
-                                                return strings;
-                                            }
-                                    );
+                            return GitHttpAction.listRepos22(strings);
+
                         })
-                        .onErrorReturn(
-                               throwable ->  {throwable.}
-                                )
                         .subscribe(strings -> {
-                            Log.e("bear", "strings : " + strings.size());
+                            Log.e("bear", "strings : " + strings);
 
                         }, throwable -> {
                             throwable.printStackTrace();
