@@ -20,7 +20,7 @@ public class GitHttpAction {
     }
 
     public static Single<String> listRepos22(String path) {
-        return HttpServer.getInstance().api.listRepos22(path)
+        return HttpServer.getInstance().api.listRepos222(path)
                 .subscribeOn(Schedulers.io());
     }
 

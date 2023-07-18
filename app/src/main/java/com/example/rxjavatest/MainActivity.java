@@ -64,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
 //        );
 
 
-        Global.repos = "users/%s/repos";
-        disposable.add(Single.just(String.format(Global.repos, "bearkinf"))
+        Global.repos = "users/bearkin/repos";
+        disposable.add(Single.just(Global.repos)
 
 //                        .concatMap(strings -> {
 //                            return GitHttpAction.listRepos("bearkinf")
