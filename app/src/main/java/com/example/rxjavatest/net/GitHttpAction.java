@@ -1,6 +1,7 @@
 package com.example.rxjavatest.net;
 
 import com.example.rxjavatest.net.api.GithubService;
+import com.example.rxjavatest.net.api.GithubService_2;
 import com.example.rxjavatest.net.client.HttpServer;
 
 import io.reactivex.rxjava3.core.Single;
@@ -18,9 +19,11 @@ public class GitHttpAction {
                 .subscribeOn(Schedulers.io());
     }
 
+    private static GithubService_2 githubService_2 = HttpServer.getInstance().apiService(GithubService_2.class);
+
 
     public static Single<Response<String>> listRepos2(String user) {
 
-        return HttpServer.getInstance().apiService(GithubService.class).listRepos2(user).subscribeOn(Schedulers.io());
+        return githubService_2.listRepos2("bearkinf").subscribeOn(Schedulers.io());
     }
 }

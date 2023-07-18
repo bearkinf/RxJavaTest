@@ -31,7 +31,6 @@ public class HttpServer {
             e.printStackTrace();
         }
     }
-
     private String BaseUrl = "https://api.github.com/";
 
     private OkHttpClient httpClient = new OkHttpClient.Builder()

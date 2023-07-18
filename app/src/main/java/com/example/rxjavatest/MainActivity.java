@@ -11,6 +11,7 @@ import com.example.rxjavatest.net.GitHttpAction;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import kotlin.collections.ArraysKt;
 
@@ -26,39 +27,88 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 //
-        disposable.add(GitHttpAction.listRepos("bearkinf")
-            
-                .subscribe(s -> {
-                    Log.d("bear", "fdsafdsa a : " + s);
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Log.e("bear", "error :  " + throwable.getMessage());
 
-                })
-        );
-
-
-//
-//        disposable.add(GitHttpAction.listRepos2("bearkinf22")
-//                .map(stringResponse -> {
-//
-//                            if (stringResponse.isSuccessful()) {
-//                                return stringResponse.body();
-//                            } else {
-//                                throw new HttpException(stringResponse);
-//                            }
+//        // 연속적인 flatmap 사용으로 데이터를 계속 처리하려면?????
+//        disposable.add(GitHttpAction.listRepos("bearkinf")
+//                .map(s -> {
+//                            ArrayList<String> arrayList = new ArrayList<>();
+//                            arrayList.add(s);
+//                            return arrayList;
 //                        }
-//
 //                )
+//                .flatMap(
+//                        strings -> {
+//                            return GitHttpAction.listRepos("bearkinf").map(
+//                                    s -> {
+//                                        strings.add(s);
+//                                        return strings;
+//                                    }
+//                            );
+//                        }
+//                )
+//                .flatMap(strings -> {
+//                    return GitHttpAction.listRepos("bearkinf").map(
+//                            s -> {
+//                                strings.add(s);
+//                                return strings;
+//                            });
+//                })
 //                .subscribe(s -> {
-//                    Log.d("bear", "fdsafdsa a : " + s);
+//                    Log.d("bear", "fdsafdsa a : " + s.size());
 //                }, throwable -> {
-////                    throwable.printStackTrace();
+//                    throwable.printStackTrace();
 //                    Log.e("bear", "error :  " + throwable.getMessage());
 //
 //                })
-//
 //        );
+
+
+        disposable.add(Single.just(new ArrayList<String>())
+
+//                        .concatMap(strings -> {
+//                            return GitHttpAction.listRepos("bearkinffdafdasf")
+//                                    .map(s -> {
+//                                                strings.add(s);
+//                                                return strings;
+//                                            }
+//                                    );
+//                        })
+                        .concatMap(strings -> {
+                            return GitHttpAction.listRepos("bearkinf")
+                                    .map(s -> {
+                                                strings.add(s);
+                                                return strings;
+                                            }
+                                    );
+                        })
+                        .concatMap(strings -> {
+                            return GitHttpAction.listRepos("otcocat")
+                                    .map(s -> {
+                                                strings.add(s);
+                                                return strings;
+                                            }
+                                    );
+                        })
+
+
+                        .concatMap(strings -> {
+                            return GitHttpAction.listRepos("bearkinffdafdasf")
+                                    .map(s -> {
+                                                strings.add(s);
+                                                return strings;
+                                            }
+                                    );
+                        })
+                        .onErrorReturn(
+                               throwable ->  {throwable.}
+                                )
+                        .subscribe(strings -> {
+                            Log.e("bear", "strings : " + strings.size());
+
+                        }, throwable -> {
+                            throwable.printStackTrace();
+                        })
+        );
 
 
     }
